@@ -289,8 +289,7 @@ namespace FluffySpoon.AspNet.LetsEncrypt
 
 		private async Task<Challenge[]> ValidateChallengesAsync(IEnumerable<IChallengeContext> challengeContexts)
 		{
-			var challenges = await Task.WhenAll(
-								challengeContexts.Select(x => x.Validate()));
+            var challenges = await Task.WhenAll(challengeContexts.Where(x => x.Type == "http-01").Select(x => x.Validate()));
 
 			while (true)
 			{
